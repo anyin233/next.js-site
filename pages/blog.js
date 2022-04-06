@@ -18,8 +18,6 @@ export default function BlogHome({blogList})
             <ul className="justify-center items-center py-3">
                 { blogList.map(({title, url, pageId}) => {
                     return <li key={pageId} className="text-xl m-5">
-                        <a href={url}>{title}</a>
-                        <br></br>
                         <Link href={`/notion/${pageId}`}>
                         <a>{title}</a>
                         </Link>
