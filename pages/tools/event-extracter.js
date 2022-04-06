@@ -3,7 +3,8 @@ import axios from 'axios'
 
 const server_url = "http://localhost:8000/uploadfile"
 
-export default function EventE() {
+export default function EventExtractor() {
+    // 确定上传的状态（上传中和上传完毕）
     const [uploaded, setUploaded] = useState(false)
     const [uploading, setUploading] = useState(false)
 
@@ -22,7 +23,6 @@ export default function EventE() {
                 setUploading(false)
             })
             .catch(e => {
-                // setErrorMsg(e)
                 window.alert(`cannot upload file because \n ${e}`)
             })
     }
@@ -30,6 +30,7 @@ export default function EventE() {
     return <div className="flex flex-col max-h-screen min-w-full justify-center items-center py-2">
         <h1 className="text-4xl font-mono font-bold text-center">Event Extracter</h1>
         <br />
+        {/* 这里使用条件渲染对于上传完毕和上传中的两种状态显示不同的内容 */}
         {
             uploaded ?
                 <div>

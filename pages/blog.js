@@ -1,29 +1,42 @@
 import { getDatabaseList } from "../lib/notion";
+import useSWR from 'swr';
+import Blog from "../lib/blog_layout";
+import { Client } from "@notionhq/client";
+import { rootDatabaseId } from "../lib/config";
+import Link from "next/link";
 
-export default function Blog({blogList})
+const database_id = "766e4829151b45738eae2e95733228b3";
+const client = new Client({
+    auth: process.env.NOTION_TOKEN
+})
+
+
+export default function BlogHome({blogList})
 {
     return (
-        <div className="flex flex-col min-h-screen min-w-full justify-center items-center py-2">
-            <h1 className="text-4xl font-mono font-bold text-center">12th Day Blog</h1>
+        <Blog>
             <ul className="justify-center items-center py-3">
-                { blogList.map(({title, url}) => {
-                    return <li key={title} className="text-xl m-5">
+                { blogList.map(({title, url, pageId}) => {
+                    return <li key={pageId} className="text-xl m-5">
                         <a href={url}>{title}</a>
+                        <br></br>
+                        <Link href={`/notion/${pageId}`}>
+                        <a>{title}</a>
+                        </Link>
                         <br/>
                     </li>
                 }) }
             </ul>
-        </div>
+        </Blog>
     )
 }
 
 export async function getStaticProps() {
-    const databaseId = "766e4829151b45738eae2e95733228b3";
-    const data = await getDatabaseList(databaseId)
-  
+    const data = await getDatabaseList(rootDatabaseId)
     return {
       props:{
         blogList: data
       }
     }
-  }
+}
+
