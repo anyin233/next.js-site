@@ -9,7 +9,6 @@
     "@notionhq/client": "^1.0.4",
     "antd": "^4.19.5",
     "axios": "^0.26.1",
-    "dns": "^0.2.2",
     "next": "latest",
     "notion-client": "^6.7.0-alpha.2",
     "notion-types": "^6.7.0-alpha.0",
