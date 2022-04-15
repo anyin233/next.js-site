@@ -12,6 +12,9 @@ import 'rc-dropdown/assets/index.css'
 // used for rendering equations (optional)
 import 'katex/dist/katex.min.css'
 
+// antd css
+import 'antd/dist/antd.css'
+
 function MyApp({ Component, pageProps }: AppProps) {
   return <Component {...pageProps} />
 }

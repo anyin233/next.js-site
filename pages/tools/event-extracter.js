@@ -1,52 +1,60 @@
 import React, { useState } from 'react'
-import axios from 'axios'
+import { Input, Button } from 'antd'
+import { send_doc } from '../../lib/ee';
+import EventDetail from '../../components/event-detail';
 
-const server_url = "http://localhost:8000/uploadfile"
+const {TextArea} = Input;
 
 export default function EventExtractor() {
-    // 确定上传的状态（上传中和上传完毕）
-    const [uploaded, setUploaded] = useState(false)
-    const [uploading, setUploading] = useState(false)
+    const [running, setRunning] = useState(false)
+    const [text, setText] = useState("")
+    const [done, setDone] = useState(false)
+    const [event_list, setEvent] = useState([{}])
+    const [server_url, setServer] = useState("http://192.168.192.84:8000/ee")
 
-    const onSubmit = (e) => {
-        e.preventDefault();
-        const form = new FormData(e.target);
-        axios.post(server_url, form,
-            {
-                onUploadProgress: progressEvent => {
-                    setUploading(true)
-                }
-            })
-            .then(response => {
-                console.log(response)
-                setUploaded(true)
-                setUploading(false)
-            })
-            .catch(e => {
-                window.alert(`cannot upload file because \n ${e}`)
-            })
+    
+    function onAreaChange(e){
+        setText(e.target.value)
     }
 
-    return <div className="flex flex-col max-h-screen min-w-full justify-center items-center py-2">
-        <h1 className="text-4xl font-mono font-bold text-center">Event Extracter</h1>
-        <br />
-        {/* 这里使用条件渲染对于上传完毕和上传中的两种状态显示不同的内容 */}
-        {
-            uploaded ?
-                <div>
-                    <h2 className="text-2xl font-bold">上传完毕</h2>
-                </div>
-                :
-                <form onSubmit={onSubmit}>
-                    <input type={"file"} name="file" accept=".doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"></input>
-                    <button className="border border-gray-500 rounded p-1 font-sans hover:text-blue-600">Upload</button>
-                </form>
-        }
-        {
-            uploading &&
-            <div>
-                <h2 className="text-2xl font-bold">处理中</h2>
+    function onServerChange(e){
+        setServer(e.target.value)
+    }
+
+    function onClick(e){
+        setRunning(true)
+        send_doc(text, server_url).then(req => {
+            console.log(req.data)
+            setEvent(req.data)
+        }).then(() => {
+            setRunning(false)
+            setDone(true)
+        }).catch(error => {
+            setRunning(false)
+            window.alert("cannot access server")
+        })
+    }
+    return (
+        <>
+            <div className='m-5'>
+            <Input defaultValue={server_url} onChange={onServerChange}></Input>
+            <div className="h-4"></div>
+            <TextArea rows={5} showCount onChange={onAreaChange} className="resize-none h-96">
+
+            </TextArea>
+            {
+                running ? 
+                <Button type='primary' shape='round' className="mt-5" onClick={onClick} loading>Submit</Button>:
+                <Button type='primary' shape='round' className="mt-5" onClick={onClick}>Submit</Button>
+            }
+            { 
+                done?
+                event_list.map(element => {
+                    // console.log(element.id)
+                    return <EventDetail event={element}/>
+                }): null
+            }
             </div>
-        }
-    </div>
+        </>
+    )
 }

@@ -1,5 +1,4 @@
 import { NotionAPI } from "notion-client"
-import { NotionRenderer } from "react-notion-x"
 import NotionPage from "../../components/notion-pages"
 import { rootDatabaseId } from "../../lib/config"
 import { getDatabaseList } from "../../lib/notion"
