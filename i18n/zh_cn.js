@@ -1,0 +1,33 @@
+let translated = {
+    EquityFreeze: "股权冻结",
+    EquityHolder: "股份持有者",
+    ForzenShares: "冻结份额",
+    LegalInstitution: "法定机构名称",
+    TotalHoldingShares: "总共持有股份",
+    TotalHoldingRatio: "总共持有股份比例",
+    StartDate: "开始日期",
+    EndDate: "结束日期",
+    EquityRepurchase: "股权回购",
+    UnfrozeDate: "冻结解除日期",
+    CompanyName: "公司名称",
+    HighestTradingPrice: "最高交易价格",
+    LowestTradingPrice: "最低交易价格",
+    RepurchasedShares: "回购份额",
+    ClosingDate: "交易关闭日期",
+    RepurchaseAmount: "回购数量",
+    EquityUnderweight: "股权减持",
+    TradedShares: "交易份额",
+    LaterHoldingShares: "延迟持有份额",
+    AveragePrice: "评价价格",
+    EquityOverweight: "股权增持",
+    Pledger: "抵押者",
+    PledgedShares: "抵押份额",
+    Pledgee: "抵押对象",
+    TotalHoldingShares: "持有股份",
+    TotalHoldingRatio: "持有股份比例",
+    TotalPledgedShares: "总抵押股份",
+    ReleasedDate: "抵押释放日期",
+    EquityPledge: "股权质押"
+}
+
+export default translated
