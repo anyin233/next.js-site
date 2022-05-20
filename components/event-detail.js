@@ -1,3 +1,5 @@
+import translated from "../i18n/zh_cn"
+
 export default function EventDetail(props) {
     let e = props.event
     return (
@@ -18,7 +20,7 @@ function EventFieldListItem(props) {
         {
             props.fi == "event_type" ?
                 null :
-                <li className="m-2">{props.fi}: {props.ef}</li>
+                <li className="m-2">{translated[props.fi]}: {props.ef}</li>
         }
     </>
 }
